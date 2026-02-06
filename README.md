@@ -9,6 +9,9 @@ All original code and systems in this repository are the work of the project con
 
 AI assistance was used to help bootstrap a functional baseline. The project is actively being learned and developed further by the author.
 
+# Systems Preview Video
+   https://youtu.be/Z_VvuwaMq64
+
 # DragonBallAscension (tModLoader) — WIP DBZ-Style Terraria Mod
 
 A Dragon Ball inspired Terraria mod focused on:
