@@ -7,6 +7,8 @@ No copyright infringement is intended.
 
 All original code and systems in this repository are the work of the project contributors unless otherwise credited.
 
+AI WAS USED TO GENERATE THE BASIC CODE TO HAVE IT IN WORKING CONDITION. I AM WILLING TO LEARN. PLEASE DO NOT BASH ME FOR AI ASSISTANCE.
+
 # DragonBallAscension (tModLoader) — WIP DBZ-Style Terraria Mod
 
 A Dragon Ball inspired Terraria mod focused on:
