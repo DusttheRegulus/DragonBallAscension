@@ -1,0 +1,33 @@
+Items: {
+	DebugKiRemote: {
+		Tooltip: ""
+		DisplayName: Debug Ki Remote
+	}
+}
+
+Keybinds: {
+	"Toggle Flight Mode (Debug Remote).DisplayName": Toggle  Flight  Mode ( Debug  Remote)
+	"Toggle Flight.DisplayName": Toggle  Flight
+	"Charge Ki Hold (Debug Remote).DisplayName": Charge  Ki  Hold ( Debug  Remote)
+	"Charge Ki.DisplayName": Charge  Ki
+	"Refill Ki (Debug Remote).DisplayName": Refill  Ki ( Debug  Remote)
+	"Drain Ki (Debug Remote).DisplayName": Drain  Ki ( Debug  Remote)
+	"Instant Transmission (Debug Remote).DisplayName": Instant  Transmission ( Debug  Remote)
+	"Instant Transmission.DisplayName": Instant  Transmission
+	Transform.DisplayName: Transform
+	"Power Down.DisplayName": Power  Down
+}
+
+NPCs.DBATestingMentorNPC.DisplayName: D B A Testing Mentor N P C
+
+Buffs: {
+	PotentialUnleashedBuff: {
+		DisplayName: Potential Unleashed Buff
+		Description: Mods.DragonBallAscension.Buffs.PotentialUnleashedBuff.Description
+	}
+
+	SuperSaiyanBuff: {
+		DisplayName: Super Saiyan Buff
+		Description: Mods.DragonBallAscension.Buffs.SuperSaiyanBuff.Description
+	}
+}

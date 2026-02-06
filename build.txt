@@ -1,0 +1,3 @@
+displayName = Dragon Ball Ascension
+author = Dust the Regulus
+version = 0.5
