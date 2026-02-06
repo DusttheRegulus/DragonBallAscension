@@ -2,102 +2,141 @@ DISCLAIMER
 
 Dragon Ball, Dragon Ball Z, Dragon Ball Super, and all related characters, concepts, and assets are the property of Akira Toriyama, Shueisha, Toei Animation, and their respective rights holders.
 
-This project is a non-commercial fan work created for entertainment and educational purposes only.
-No copyright infringement is intended.
+This project is a non commercial fan work created for entertainment and educational purposes only. No copyright infringement is intended.
 
 All original code and systems in this repository are the work of the project contributors unless otherwise credited.
 
-AI assistance was used to help bootstrap a functional baseline. The project is actively being learned and developed further by the author.
+AI assistance was used during early development to help bootstrap a functional baseline. The project is actively being learned and developed further by the author.
+
+----------------------------------------------------------------
 
 # Systems Preview Video
-   https://youtu.be/Z_VvuwaMq64
+https://youtu.be/Z_VvuwaMq64
 
-# DragonBallAscension (tModLoader) — WIP DBZ-Style Terraria Mod
+----------------------------------------------------------------
+
+# DragonBallAscension (tModLoader) | WIP DBZ Style Terraria Mod
 
 A Dragon Ball inspired Terraria mod focused on:
-- Ki resource system + Ki charging
+
+- Ki resource system and Ki charging
 - Transformations with Ki drain and mastery hooks
-- Flight + Instant Transmission movement tech
-- Future: mentors, quests, form unlock progression, ki attacks/weapons, balance pass
+- Flight and Instant Transmission movement systems
+- Future systems including mentors, quests, form unlock progression, Ki attacks and weapons, and full balance pass
+
+----------------------------------------------------------------
 
 ## Current Status (Functional Baseline)
-This repo is in an early “v0.5 baseline” state: core systems work, content and balancing are placeholders.
 
-**Works right now:**
-- Ki meter (charge + drain)
-- Charging Ki (keybind)
-- Transform + Power Down (keybinds)
-- Flight (toggle, drains Ki)
-- Instant Transmission (teleport to cursor, costs Ki)
-- Race + Trait switching via testing NPC (effects not implemented yet)
-- Debug/testing tools (temporary; will be removed/locked down later)
+This repository is currently in an early v0.5 baseline state. Core systems function, but content and balance are placeholders.
 
-**Not implemented yet (planned):**
-- Stat bonuses from races/forms
-- Ki attacks/weapons, armor, accessories
-- Mastery progression + unlock requirements
-- Mentors (Elder Kai / Beerus / Whis / etc) and questlines
-- Transformation tree UI/menu
-- Dragon Balls / wishes systems
-- Full progression content to Wall of Flesh and beyond
+----------------------------------------------------------------
 
-## Roadmap (High-Level)
-**Goal for 1.0:** Playable progression through Wall of Flesh with meaningful unlocks, balance, and at least a small set of ki attacks/items.
+## Design Philosophy
 
-**Later goals:** Mechanical bosses → Plantera → Golem → Moon Lord form paths, mentor arcs, Dragon Balls, and deep mastery systems.
+- Ki is an active resource. You must charge to recover it. No passive regeneration.
+- Transformations trade power for sustained Ki drain.
+- Flight is a core mobility system, not vanilla wings, and will require training.
+- Progression is mastery and training driven, not instant unlocks.
+- Instant Transmission will require training, with upgrades reducing Ki cost and extending range.
+
+----------------------------------------------------------------
+
+### Planned Milestones
+
+- v0.6 Basic Ki attacks and stat scaling
+- v0.7 Mastery system and early progression
+- v0.8 Mentor NPC framework
+- v0.9 Balance pass and UI polish
+- v1.0 Full playable progression to Wall of Flesh
+
+----------------------------------------------------------------
+
+## Works Right Now
+
+- Ki meter using a charge only system with no passive regeneration
+- Ki charging via keybind
+- Transform and Power Down via keybinds
+- Flight toggle that drains Ki
+- Instant Transmission to cursor with Ki cost
+- Race and Trait switching through testing NPC, effects not yet implemented
+- Debug and testing tools for development only, not part of intended gameplay
+
+----------------------------------------------------------------
+
+## Not Implemented Yet (Planned)
+
+- Stat bonuses from races and forms
+- Ki attacks, weapons, armor, and accessories
+- Mastery progression and unlock requirements
+- Mentor NPCs such as Elder Kai, Beerus, and Whis, including questlines
+- Transformation tree and UI menu
+- Dragon Balls and wish systems
+- Full progression content through Wall of Flesh and beyond
+
+----------------------------------------------------------------
+
+## Roadmap (High Level)
+
+Goal for 1.0: A fully playable progression experience through Wall of Flesh with meaningful unlocks, balance, and a functional set of Ki based attacks and items.
+
+Later goals include Mechanical Bosses, Plantera, Golem, and Moon Lord progression paths, mentor arcs, Dragon Balls, and deeper mastery systems.
+
+----------------------------------------------------------------
 
 ## Help Wanted
-If you’d like to contribute, I’m specifically looking for:
+
+If you would like to contribute, the project is currently looking for:
 
 ### Coders (C# / tModLoader)
-- Implement race effects + form stat scaling
-- Ki attacks (basic blast, beam, charge attacks)
-- Mastery system (time in form + combat usage)
-- Mentor NPC logic + quest triggers
-- Multiplayer safety (syncing key systems)
 
-### UI / UX Designers
-- Transformation tree/menu UI
-- Ki meter polish + accessibility
-- Simple in-game tutorial prompts/tooltips
+- Implement race effects and form stat scaling
+- Create Ki attacks including blasts, beams, and charge attacks
+- Build mastery system based on time in form and combat usage
+- Implement mentor NPC logic and quest triggers
+- Improve multiplayer safety and system synchronization
+
+### UI and UX Designers
+
+- Design transformation tree and menu UI
+- Improve Ki meter polish and accessibility
+- Add simple in game tutorial prompts and tooltips
 
 ### Balance Testers
-- Ki costs/drain rates
-- Form scaling vs vanilla progression
-- “Rage unlock” conditions testing (pre-HM → HM)
 
-## Installation / Dev Setup (Local)
-1) Install tModLoader
-2) Clone/download this repo into:
-   `Documents/My Games/Terraria/tModLoader/ModSources/DragonBallAscension`
-3) Open tModLoader → Workshop/Dev → Build + Reload
-4) Enable only this mod for clean testing
+- Tune Ki costs and drain rates
+- Evaluate form scaling against vanilla progression
+- Test rage unlock conditions from pre Hardmode into Hardmode
+
+----------------------------------------------------------------
+
+## Installation and Development Setup (Local)
+
+1. Install tModLoader
+2. Clone or download this repository into:
+   Documents/My Games/Terraria/tModLoader/ModSources/DragonBallAscension
+3. Open tModLoader, go to Workshop or Development, then Build and Reload
+4. Enable only this mod for clean testing
+
+----------------------------------------------------------------
 
 ## Contribution Notes
-- Keep changes focused: one feature per PR if possible
-- Comment tuning constants and explain why they changed
-- If you add new keybinds, document them here
-- No copyrighted DBZ assets will be included in the repo (code-only / original assets only)
+
+- Keep changes focused. One feature per pull request when possible.
+- Comment tuning constants and explain why changes were made.
+- Document any new keybinds added.
+- No copyrighted Dragon Ball assets will be included in this repository. Code and original assets only.
+
+----------------------------------------------------------------
 
 ## License
+
 MIT License
 
 Copyright (c) 2026 DusttheRegulus
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files, the Software, to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
