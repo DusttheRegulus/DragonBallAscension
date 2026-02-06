@@ -7,7 +7,7 @@ No copyright infringement is intended.
 
 All original code and systems in this repository are the work of the project contributors unless otherwise credited.
 
-AI WAS USED TO GENERATE THE BASIC CODE TO HAVE IT IN WORKING CONDITION. I AM WILLING TO LEARN. PLEASE DO NOT BASH ME FOR AI ASSISTANCE.
+AI assistance was employed to have BASIC working code. The systems as they currently are do work and function. I am WILLING to learn. If you are here to bash on the use of AI, please leave.
 
 # DragonBallAscension (tModLoader) — WIP DBZ-Style Terraria Mod
 
