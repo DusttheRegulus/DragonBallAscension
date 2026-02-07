@@ -110,6 +110,23 @@ If you would like to contribute, the project is currently looking for:
 
 ----------------------------------------------------------------
 
+## Starter Tasks (Good First Contributions)
+
+These are smaller, self contained tasks suitable for new contributors or first pull requests.
+
+- Replace ClampKi usage with Math.Clamp cleanup where appropriate
+- Implement a basic Ki blast projectile
+- Implement simple stat scaling framework for transformations
+- Set up basic transformation buffs with custom buff icons
+- Implement trait bonuses and basic race stat effects
+- Add initial form buffs usable by both player and mentor NPCs
+- Basic Ki value synchronization for multiplayer stability
+- Add simple Ki meter UI polish improvements
+- Create first pass transformation activation visual feedback
+- Implement simple form drain tuning constants for testing
+
+----------------------------------------------------------------
+
 ## Installation and Development Setup (Local)
 
 1. Install tModLoader
