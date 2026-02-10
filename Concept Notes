@@ -1,0 +1,418 @@
+DBT-Style Terraria Mod – Full Concept Notes
+
+1. Game Progression & Form Unlocks
+
+Start of Game
+
+Hidden Trait Roll: one random trait per player; stored internally, bonuses inactive.
+
+Debug item exists (for testing only).
+
+No forms available.
+
+After Eye of Cthulhu
+
+Buff: “Mysterious Power” appears (generic aura icon).
+
+Tooltip: "You feel a strange energy within you… but its nature is unclear."
+
+Early ki use limited to base skills.
+
+After Skeletron
+
+Elder Kai Quest unlocks: Unlock Potential
+
+Complete sparring challenge to reveal trait and unlock Potential Unleashed.
+
+Ki bar recolored, bonuses now active.
+
+Form mastery XP begins.
+
+Hardmode Start (Wall of Flesh)
+
+SSJ1 unlocked via quest or rage mechanic.
+
+Trait affects mastery gain:
+
+Prodigy: faster mastery progression.
+
+Legendary: higher damage, more ki drain.
+
+Post-Mechanical Bosses
+
+SSJ2 unlock.
+
+Optional SS God side-quest (requires rare drop/NPC trigger).
+
+Post-Plantera
+
+SS God or Legendary SSJ3 depending on trait.
+
+Trait paths diverge (Prodigy → God/Blue; Legendary → SSJ3/SSJ4).
+
+Post-Golem / Pre-Moon Lord
+
+SSB unlock (Prodigy path).
+
+SSJ4 quest unlock (open to all traits except Prodigy, requires special item).
+
+Post-Moon Lord / Late Game
+
+Ultra Instinct, Ultra Ego, SSJ4 Full Power, SSJ4 Limit Breaker.
+
+Zeno/Grand Priest optional event for trait reroll, hints, or form unlock assistance.
+
+2. Traits & Gameplay Effects
+Trait	Theme	Effects	Ki Bar Color
+Legendary	Raw, uncontrollable power	×2 Max Ki, +25% SSJ damage, +30% ki drain. Cannot use God/Blue/Rose. Gains SSJ3 & SSJ4 earlier.	Green-gold
+Prodigy	Mastery & refinement	Mastery XP ×2, -15% ki drain, +5% crit. Cannot use Legendary SSJ. Gains God → Blue earlier.	Blue-silver
+Warrior’s Spirit	Balanced	+15% damage & defense, normal ki regen, no form locks	Red-orange
+Battle Genius	Tactical	+10% crit, +20% ki regen <50% HP, +10% mastery gain	Purple-silver
+Iron Will	Endurance	-25% ki drain, -20% mastery gain, +10 defense	Steel gray
+Draconic	Fiery offense	Melee/ki attacks inflict On Fire!, +15% ki damage, -15% ki regen	Fiery red-gold
+Corrupted/Evil	Dark power	Unlocks SS Rose path; blocked from Beerus/Whis mentorship	Black-purple
+Optional debug item for rerolling traits.
+
+3. NPC Mentors & Dialogue
+
+Elder Kai (Pre-Hardmode)
+
+Unlocks Potential Unleashed and early mastery.
+
+Dialogue per trait:
+
+Legendary: “Hmm, your energy is fierce and wild… control it or be consumed.”
+
+Prodigy: “Ah, your spirit is sharp… master forms faster than most.”
+
+Warrior’s Spirit: “Balanced warrior… strength comes from patience.”
+
+Battle Genius: “You fight with cunning… combine wit with power.”
+
+Iron Will: “Endurance is remarkable… focus is key.”
+
+Draconic: “A fierce fire burns within you… use wisely.”
+Beerus (Hardmode Mentor)
+
+Unlocks God-related forms after trials.
+
+Refuses evil trait characters.
+
+Dialogue per trait:
+
+Legendary: “Control your chaos or be consumed.”
+
+Prodigy: “Quick learner… worthy of divine training.”
+
+Warrior’s Spirit: “Steady and strong… don’t falter.”
+
+Battle Genius: “Brains and brawn… dangerous combo.”
+
+Iron Will: “Endurance is useful… handle true power.”
+
+Draconic: “Your flames may burn bright… don’t burn alive.”
+
+Whis (Post-Beerus Approval)
+
+Unlocks God Ki forms: SSG → SSB → Ultra Instinct.
+
+Provides mastery guidance and hints.
+
+Dialogue per trait:
+
+Legendary: “Harness raw power carefully… fine line between strength and self-destruction.”
+
+Prodigy: “Eager to master forms… serves you well.”
+
+Warrior’s Spirit: “Balance and patience… virtues bring harmony.”
+
+Battle Genius: “Sharp mind and technique… continue refining both.”
+
+Iron Will: “Stamina supports training… focus energy.”
+
+Draconic: “Fiery nature… gift and challenge. Temper it with discipline.”
+Zeno / Grand Priest (Optional Late Game)
+
+Can grant:
+
+Trait reroll
+
+Hint for next form unlock
+
+Inner power boost
+
+Requires achievement milestone (e.g., post-Moon Lord).
+
+4. Form Progression, Mastery & Ki Drain
+Form	Mastery Step?	Unlock Timing	Base Ki Drain (ki/s)	Max Ki Drain	Notes
+Potential Unleashed	No	Pre-Hardmode	100	50	Rage mechanic optional early unlock
+Beast	No	Early HM+	150	75	Upgrade to Potential Unleashed
+SSJ1	No	HM / rage	200	100	Core first transformation
+Super Vegeta	Yes	SSJ1 Mastery	250	125	Slight speed penalty, more damage
+Full Power SSJ1	Yes	SSJ1 Mastery	300	150	Stabilized mastery form
+SSJ2	No	Post-Mechanical	350	175	High damage/ki cost
+SSJ3	No	Post-Mechanical	600	300	Strategic use
+LSSJ1	Yes	HM+	400	200	Blue → Gold → Green
+LSSJ2	No	HM+	500	250	Fan-inspired
+LSSJ3	No	HM+	700	350	Fanmade
+SSG	No	Post-Plantera / Beerus	650	325	God Ki form
+SSB	No	Post-Plantera / Whis	750	375	Mastery of god ki
+SS Rose	No	HM, evil trait	700	350	Dark divine mentor unlock
+Ultra Instinct	No	Late HM	800	400	Evasion-focused
+Ultra Ego	No	Late HM	850	425	Power-focused, sacrifices defense
+SSJ4	No	Post-Moon Lord	900	450	Primal form
+SSJ4 Full Power	Yes	SSJ4 Mastery	1000	500	Optional mastery step
+SSJ4 Limit Breaker	Yes	SSJ4 Mastery	1100	550	Max mastery, max ki drain
+Mastery Notes:
+
+Gained by time spent in form + combat use.
+
+Ki recovery consumables and items can temporarily improve maintenance.
+
+Flight/instant transmission slows ki gain slightly.
+
+Rage mechanic: repeated losses vs bosses may trigger early SSJ1 unlock.
+
+5. Ki System & Consumables
+
+Consumables & Items:
+
+Ki recovery potions: emergency refill.
+
+Ki charge boosters: crafted from boss drops or fragments.
+
+Max ki boosters: one-time consumables for permanent max ki increase.
+
+Ki weapon modifiers: boost damage, add debuffs, adjust ki consumption.
+
+Race-specific items: Frieza race items can unlock Golden/Black forms.
+
+Ki Mechanics:
+
+Flat ki drain per form; reduced at max mastery.
+
+Mastery reduces drain, increases damage/stability.
+
+Ki recovery affected by movement, flight, or instant transmission.
+
+6. Races & Special Traits
+
+Saiyan (default)
+
+Can unlock all SSJ forms, SSG, SSB, SSJ4.
+
+Trait affinity: Legendary / Prodigy.
+
+Frieza Race
+
++10–15% ki damage naturally.
+
+Favored Traits: Legendary, Battle Genius.
+
+Exclusive forms:
+
+1st → Final Form
+
+Golden Frieza
+
+Black Frieza (post-game ultra-form)
+
+Custom Races Concept
+
+Any race can access forms.
+
+Some favor traits naturally for mastery.
+
+Optional custom abilities (race-specific buffs, ki efficiency, etc.).
+
+7. Babidi / Majin Mechanics
+
+Only players under Babidi see his messages.
+
+Evil/Corrupted trait may trigger Majin path.
+
+Players gain temporary stat boosts but can be “controlled” until mastery/quest completes.
+
+No PvP influence; effects limited to player stats and AI behavior.
+
+8. Optional Cutscenes
+
+Minimal, safe for multiplayer.
+
+Cannot interrupt boss fights or cause player death.
+
+Triggered by:
+
+Unlocking new form
+
+Mentor milestones
+
+Late-game Zeno/Grand Priest events
+
+9. Rage Mechanic
+
+Early-game rage (e.g., repeated deaths to Wall of Flesh) can temporarily push player into higher forms (e.g., SSJ1 early).
+
+Temporary unlocks last until death; permanent unlocks gained under certain thresholds or milestones.
+
+Acts like a revival item: restore ~50% HP, notify in chat.
+
+Ki Weapons & Attacks
+
+Include iconic attacks: Kamehameha, Spirit Bomb, basic Ki blasts/beams, etc.
+
+Chargeable attacks consume more ki; damage scales with mastery and forms.
+
+Players could have Ki Weapon upgrades via consumables or accessories (add debuffs, extra damage, faster charge).
+
+Hakai (Energy of Destruction)
+
+Possible outcomes:
+
+Beerus/other Gods may use on players under certain conditions (e.g., pestering him, evil trait abuse).
+
+If player can use:
+
+Check energy cost, announce in chat (“<player>: Hakai!”).
+
+Failure due to insufficient energy is local-only feedback.
+
+Consider “Hakai resistance” for bosses to prevent instant one-shots.
+
+Saiyan Tail Options
+
+Optional cosmetic choice.
+
+Could slightly improve ki control but doesn’t restrict form access.
+
+Fusion Mechanics
+
+Fusion Dance / Potara restrictions:
+
+Requires related NPC friendship/mastery.
+
+Player-only control; other participant is NPC.
+
+Time-limited buffs for dance; Potara permanent unless involving a Kai.
+
+Unlocks depend on forms of player and NPC (e.g., SSJ maxed → Gogeta/Vegito).
+
+Babidi / Majin Control
+
+Only affects players with appropriate trait (evil/corrupted).
+
+Player can resist through mastery progression (like Vegeta).
+
+Commands limited to flavor / buffs, no PvP.
+
+Unique dialogue for Majin control events.
+
+Zamasu (NPC for evil trait players)
+
+Only interacts with “evil” trait players.
+
+Provides power upgrades, form hints, or alternate questlines.
+
+Beerus/Whis path unavailable for these players.
+
+Beerus & Whis Mentor Interventions
+
+Beerus: can discourage, threaten, or Hakai players if rules ignored or player is reckless.
+
+Whis: training / mastery guidance, unlock god forms, balance evasion vs. power.
+
+Zeno / Grand Priest Appearances
+
+Triggered by specific conditions; reward could include trait reroll, hints, or unique blessings.
+
+Interactions only grant specific wishes (e.g., “unlock next form,” “gain inner power”).
+
+Super Saiyan 4 / Great Ape Mechanic
+
+Must account for tail requirement and transformation conditions.
+
+Optional temporary Great Ape form for SS4 unlock sequences.
+
+Ki & Form Vendor
+
+Dynamic stock based on world state and player form mastery.
+
+Sells:
+
+One-time consumables (permanent ki/max ki boost, reduced ki drain).
+
+Temporary consumables (ki recovery, temporary buffs).
+
+Accessories / weapon upgrades (damage, debuffs, mastery speed).
+
+Dialogue reacts to player forms/traits.
+
+Stock can rotate with world events or daily resets.
+
+Custom Races
+
+Optionally favor certain traits or paths (e.g., Frieza race → Golden/Black forms only accessible to them).
+
+Do not restrict access to other forms outside their lore-based bonuses.
+
+Addendum – Stagger / Knockback Resistance & Full Power Concept
+
+Since Terraria doesn’t have a true “stagger” system, consider implementing knockback resistance instead.
+
+While active, players hit by enemies/projectiles won’t be pushed back as far, but they still retain standard iFrames.
+
+Could be tied to certain forms, transformations, or “power mode” states (example: Jiren’s Full Power, Frieza’s 100% Muscle form).
+
+Balance testing required to ensure it doesn’t trivialize knockback-heavy bosses (e.g., Skeletron, Duke Fishron).
+
+Full Power State
+
+Functions as a transformation-style toggle.
+
+Frieza-race: Accessed as “Final Form (100% Power)” with visual bulk-up.
+
+Other races: May access through intensive training, but only in base form (not while transformed).
+
+Consider limiting duration or giving stamina/ki drain to balance strength boost.
+
+This state inherently grants knockback resistance as part of its identity.
+
+Addendum – Stacking Kaioken with Transformations
+
+Kaioken can be stacked with certain transformations, but not all.
+
+Allowed forms:
+
+Super Saiyan (base levels 1–3) → Compatible with Kaioken, though health drain increases significantly due to strain.
+
+Super Saiyan Blue → Explicitly shown in canon (Goku). Stacking works, but severe HP drain and stamina burn apply.
+
+Restricted forms:
+
+Super Saiyan Blue Evolved → Kaioken incompatible, as the form already represents Vegeta’s mastery/strain bypass and stacking would be redundant.
+
+Super Saiyan God, Super Saiyan 4, Ultra Instinct, or other “refined” states → Kaioken disallowed to reflect lore and avoid unbalanced mechanics.
+
+Scaling effect:
+
+Each tier of Kaioken multiplies the passive drain of the transformation by that level (Kaioken x5 = 5x HP/stamina drain).
+
+Strain compounding makes reckless stacking risky but rewarding if pulled off.
+
+Addendum – Kaioken Health Drain Mechanic
+
+Kaioken should apply damage over time (DoT) in fixed 1 HP ticks.
+
+Tick delay reduces as multiplier increases:
+
+Kaioken x2 → slower tick interval, easier to manage.
+
+Kaioken x10 → faster tick interval, noticeable drain.
+
+Kaioken x20 → very fast tick interval, extremely punishing to sustain.
+
+This scaling makes higher multipliers more risky to maintain without making the form unusable.
+
+Health regen debuffs/interruptions significantly increase the danger at high multipliers, adding tactical considerations.
+
+Stacking Kaioken with forms (e.g. Super Saiyan, Super Saiyan Blue) compounds risk, but shouldn’t instantly melt the player’s HP unless overused recklessly.
