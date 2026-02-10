@@ -43,10 +43,65 @@ namespace DragonBallAscension.Players
 		// Flight drain accumulator
 		private float _flightDrainAccumulator = 0f;
 
+		// --- Progression / Scaling (baseline, low-impact) ---
+		public int PowerLevel = 1; // simple progression number for later
+
+		// Base modifiers from Race/Trait (kept as 1.0 by default)
+		public float BaseAtkMult = 1f;
+		public float BaseDefMult = 1f;
+		public float BaseMaxKiMult = 1f;
+
+		// Final computed (Race/Trait/PL/Form combined)
+		public float EffectiveAtkMult = 1f;
+		public float EffectiveDefMult = 1f;
+		public int EffectiveMaxKi = 1000;
+
+		// Internal: track last MaxKi so we can clamp Ki cleanly if MaxKi changes
+		private int _lastMaxKi = 1000;
+
+		// --- Beam charge state (for test weapon) ---
+		public int BeamChargeStage = 0;          // 0..3
+		public float BeamChargeProgress = 0f;    // 0..1 progress toward next stage
+		public bool BeamCharging = false;        // set by weapon while right-click held
+		public bool BeamFiring = false;          // set by weapon while firing
+
+		// --- Mastery per form (0..1) ---
+		public float MasteryPotentialUnleashed = 0f;
+		public float MasterySuperSaiyan1 = 0f;
+
+		// Combat gate: only direct hits set this (no DoTs)
+		private int _combatTicks = 0; // counts down
+
+		// --- Race/Trait derived scalars ---
+		public float ChargeRateMult = 1f;          // affects Ki gain while charging
+		public float BaseMoveSpeedBonus = 0f;      // additive to Player.moveSpeed (0.05 = +5%)
+		public float PassiveKiRegenPerSecond = 0f; // Android baseline, etc.
+		private float _passiveKiRegenAcc = 0f;     // internal accumulator
+
 		public override void Initialize()
 		{
 			MaxKi = 1000;
 			Ki = 0; // start at 0 so charging matters
+
+			_lastMaxKi = MaxKi;
+			PowerLevel = 1;
+
+			BeamChargeStage = 0;
+			BeamChargeProgress = 0f;
+			BeamCharging = false;
+			BeamFiring = false;
+
+			MasteryPotentialUnleashed = 0f;
+			MasterySuperSaiyan1 = 0f;
+			_combatTicks = 0;
+
+			ChargeRateMult = 1f;
+			BaseMoveSpeedBonus = 0f;
+			PassiveKiRegenPerSecond = 0f;
+			_passiveKiRegenAcc = 0f;
+
+			RecomputeStats();
+			Ki = (int)MathHelper.Clamp(Ki, 0, MaxKi);
 		}
 
 		public override void SaveData(TagCompound tag)
@@ -65,6 +120,14 @@ namespace DragonBallAscension.Players
 			tag["KiBarY"] = KiBarY;
 
 			tag["FlightMode"] = FlightMode;
+
+			tag["PowerLevel"] = PowerLevel;
+
+			tag["BeamChargeStage"] = BeamChargeStage;
+			tag["BeamChargeProgress"] = BeamChargeProgress;
+
+			tag["MasteryPU"] = MasteryPotentialUnleashed;
+			tag["MasterySS1"] = MasterySuperSaiyan1;
 		}
 
 		public override void LoadData(TagCompound tag)
@@ -84,19 +147,133 @@ namespace DragonBallAscension.Players
 
 			FlightMode = tag.GetBool("FlightMode");
 
-			ClampKi();
+			PowerLevel = tag.ContainsKey("PowerLevel") ? tag.GetInt("PowerLevel") : 1;
+
+			BeamChargeStage = tag.ContainsKey("BeamChargeStage") ? tag.GetInt("BeamChargeStage") : 0;
+			BeamChargeProgress = tag.ContainsKey("BeamChargeProgress") ? tag.GetFloat("BeamChargeProgress") : 0f;
+			BeamCharging = false;
+			BeamFiring = false;
+
+			MasteryPotentialUnleashed = tag.ContainsKey("MasteryPU") ? tag.GetFloat("MasteryPU") : 0f;
+			MasterySuperSaiyan1 = tag.ContainsKey("MasterySS1") ? tag.GetFloat("MasterySS1") : 0f;
+			_combatTicks = 0;
+
+			ChargeRateMult = 1f;
+			BaseMoveSpeedBonus = 0f;
+			PassiveKiRegenPerSecond = 0f;
+			_passiveKiRegenAcc = 0f;
+
+			_lastMaxKi = MaxKi;
+
+			RecomputeStats();
+			Ki = (int)MathHelper.Clamp(Ki, 0, MaxKi);
+
+			if (BeamChargeStage < 0) BeamChargeStage = 0;
+			if (BeamChargeStage > 3) BeamChargeStage = 3;
+			BeamChargeProgress = MathHelper.Clamp(BeamChargeProgress, 0f, 1f);
+
+			MasteryPotentialUnleashed = MathHelper.Clamp(MasteryPotentialUnleashed, 0f, 1f);
+			MasterySuperSaiyan1 = MathHelper.Clamp(MasterySuperSaiyan1, 0f, 1f);
 		}
 
-		private void ClampKi()
+		// --- Weapon helpers ---
+		public bool HasKi(int amount) => InfiniteKi || Ki >= amount;
+
+		public bool TryConsumeKi(int amount)
 		{
-			if (MaxKi < 0) MaxKi = 0;
+			if (InfiniteKi) return true;
+			if (amount <= 0) return true;
+			if (Ki < amount) return false;
+			Ki -= amount;
 			if (Ki < 0) Ki = 0;
-			if (Ki > MaxKi) Ki = MaxKi;
+			return true;
 		}
 
-		/// <summary>
-		/// Handle flight movement here so it overrides vanilla movement (prevents "slow-fall" feel).
-		/// </summary>
+		private float GetMasteryFor(DBAForm form)
+		{
+			return form switch
+			{
+				DBAForm.PotentialUnleashed => MasteryPotentialUnleashed,
+				DBAForm.SuperSaiyan1 => MasterySuperSaiyan1,
+				_ => 0f
+			};
+		}
+
+		private void SetMasteryFor(DBAForm form, float value)
+		{
+			value = MathHelper.Clamp(value, 0f, 1f);
+			switch (form)
+			{
+				case DBAForm.PotentialUnleashed:
+					MasteryPotentialUnleashed = value;
+					break;
+				case DBAForm.SuperSaiyan1:
+					MasterySuperSaiyan1 = value;
+					break;
+			}
+		}
+
+		private bool IsIdleForMastery()
+		{
+			if (Player.controlLeft || Player.controlRight || Player.controlUp || Player.controlDown)
+				return false;
+
+			return Player.velocity.LengthSquared() < 0.05f * 0.05f;
+		}
+
+		private void RecomputeStats()
+		{
+			BaseAtkMult = 1f;
+			BaseDefMult = 1f;
+			BaseMaxKiMult = 1f;
+
+			// Trait
+			var tDef = Traits.GetDef(Trait);
+			BaseAtkMult *= tDef.AtkMult;
+			BaseDefMult *= tDef.DefMult;
+			BaseMaxKiMult *= tDef.MaxKiMult;
+
+			// Race
+			var rDef = DBARaces.GetDef(Race);
+			BaseAtkMult *= rDef.AtkMult;
+			BaseDefMult *= rDef.DefMult;
+			BaseMaxKiMult *= rDef.MaxKiMult;
+
+			ChargeRateMult = tDef.ChargeRateMult * rDef.ChargeRateMult;
+			BaseMoveSpeedBonus = tDef.MoveSpeedBonus + rDef.MoveSpeedBonus;
+			PassiveKiRegenPerSecond = rDef.PassiveKiRegenPerSecond;
+
+			int pl = PowerLevel < 1 ? 1 : PowerLevel;
+
+			float plAtk = 1f + (pl - 1) * 0.005f;
+			float plDef = 1f + (pl - 1) * 0.003f;
+			float plMaxKi = 1f + (pl - 1) * 0.002f;
+
+			float formAtk = 1f;
+			float formDef = 1f;
+
+			if (ActiveForm != DBAForm.None)
+			{
+				float m = GetMasteryFor(ActiveForm);
+				formAtk = DBAForms.GetAtkMult(ActiveForm, m);
+				formDef = DBAForms.GetDefMult(ActiveForm, m);
+			}
+
+			EffectiveAtkMult = BaseAtkMult * plAtk * formAtk;
+			EffectiveDefMult = BaseDefMult * plDef * formDef;
+
+			EffectiveMaxKi = (int)(1000f * BaseMaxKiMult * plMaxKi);
+			if (EffectiveMaxKi < 0) EffectiveMaxKi = 0;
+
+			MaxKi = EffectiveMaxKi;
+
+			if (MaxKi != _lastMaxKi)
+			{
+				_lastMaxKi = MaxKi;
+				Ki = (int)MathHelper.Clamp(Ki, 0, MaxKi);
+			}
+		}
+
 		public override void PreUpdateMovement()
 		{
 			if (Player.dead || !FlightMode)
@@ -110,16 +287,31 @@ namespace DragonBallAscension.Players
 			if (Player.dead)
 				return;
 
+			// IMPORTANT: compute scalars first so we don’t use “stale” ChargeRateMult etc.
+			RecomputeStats();
+
+			// Apply the always-on race/trait buffs via the centralized helpers
+			DBARaces.ApplyBuff(Player, Race);
+			Traits.ApplyBuff(Player, Trait);
+
+			if (_combatTicks > 0)
+				_combatTicks--;
+
 			if (InfiniteKi)
+			{
 				Ki = MaxKi;
+				_passiveKiRegenAcc = 0f;
+			}
 
 			// Charge-only KI gain (no passive regen)
 			if (!InfiniteKi && IsCharging && Ki < MaxKi)
 			{
-				Ki += 2; // noticeable for testing
+				int gain = (int)(2f * ChargeRateMult);
+				if (gain < 1) gain = 1;
+
+				Ki += gain;
 				if (Ki > MaxKi) Ki = MaxKi;
 
-				// Simple aura-ish dust while charging
 				_chargeDustTimer++;
 				if (_chargeDustTimer >= 3)
 				{
@@ -127,6 +319,20 @@ namespace DragonBallAscension.Players
 					var pos = Player.Center + new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-20f, 10f));
 					var d = Terraria.Dust.NewDustPerfect(pos, 58, new Vector2(0f, -0.8f), 120, Color.White, 1.1f);
 					d.noGravity = true;
+				}
+			}
+
+			// Passive Ki regen (Android baseline, etc.)
+			if (!InfiniteKi && PassiveKiRegenPerSecond > 0f && Ki < MaxKi)
+			{
+				_passiveKiRegenAcc += PassiveKiRegenPerSecond / 60f;
+				if (_passiveKiRegenAcc >= 1f)
+				{
+					int add = (int)_passiveKiRegenAcc;
+					_passiveKiRegenAcc -= add;
+
+					Ki += add;
+					if (Ki > MaxKi) Ki = MaxKi;
 				}
 			}
 
@@ -165,7 +371,22 @@ namespace DragonBallAscension.Players
 			{
 				ApplyFormBuffs();
 
-				// Aura particles (throttled)
+				// Passive mastery gain while transformed + idle (very slow)
+				if (IsIdleForMastery())
+				{
+					var def = DBAForms.GetDef(ActiveForm);
+					float mastery = GetMasteryFor(ActiveForm);
+
+					float maxAllowed = (_combatTicks > 0) ? 1f : def.TrainingCap;
+
+					if (mastery < maxAllowed)
+					{
+						mastery += def.IdleMasteryGainPerSecond / 60f;
+						if (mastery > maxAllowed) mastery = maxAllowed;
+						SetMasteryFor(ActiveForm, mastery);
+					}
+				}
+
 				_auraDustTimer++;
 				if (_auraDustTimer >= 3)
 				{
@@ -173,12 +394,12 @@ namespace DragonBallAscension.Players
 					SpawnFormAuraDust();
 				}
 
-				// Form drain while transformed
 				if (!InfiniteKi)
 				{
-					var def = DBAForms.GetDef(ActiveForm);
+					float m = GetMasteryFor(ActiveForm);
+					float drainPerSec = DBAForms.GetKiDrainPerSecond(ActiveForm, m);
 
-					_formDrainAccumulator += def.KiDrainPerSecond / 60f; // per tick
+					_formDrainAccumulator += drainPerSec / 60f;
 					if (_formDrainAccumulator >= 1f)
 					{
 						int drain = (int)_formDrainAccumulator;
@@ -204,39 +425,129 @@ namespace DragonBallAscension.Players
 				ClearFormBuffs();
 			}
 
-			ClampKi();
+			// --- Beam charge decay when idle ---
+			if (!BeamCharging && !BeamFiring)
+			{
+				if (BeamChargeStage > 0 || BeamChargeProgress > 0f)
+				{
+					BeamChargeProgress -= 0.02f;
+					if (BeamChargeProgress <= 0f)
+					{
+						if (BeamChargeStage > 0)
+						{
+							BeamChargeStage--;
+							BeamChargeProgress = 1f;
+						}
+						else
+						{
+							BeamChargeProgress = 0f;
+						}
+					}
+				}
+			}
+
+			BeamCharging = false;
+			BeamFiring = false;
+
+			Ki = (int)MathHelper.Clamp(Ki, 0, MaxKi);
 		}
 
-		/// <summary>
-		/// True WASD flight.
-		/// - No slow-fall: gravity is nulled.
-		/// - X and Y are controlled independently (no diagonal normalization).
-		/// - If you're not holding W/S, you hard-hover vertically (velocity.Y = 0).
-		/// - If you're not holding A/D, you stop horizontally (velocity.X = 0).
-		/// </summary>
+		public override void ModifyHurt(ref Player.HurtModifiers modifiers)
+		{
+			if (EffectiveDefMult > 0f && EffectiveDefMult != 1f)
+				modifiers.FinalDamage *= 1f / EffectiveDefMult;
+		}
+
+		public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
+		{
+			_combatTicks = 6 * 60;
+		}
+
+		public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
+		{
+			_combatTicks = 6 * 60;
+		}
+
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+		{
+			if (ActiveForm == DBAForm.None)
+				return;
+
+			if (damageDone <= 0)
+				return;
+
+			var def = DBAForms.GetDef(ActiveForm);
+			float mastery = GetMasteryFor(ActiveForm);
+
+			if (target.type == NPCID.TargetDummy)
+			{
+				float cap = def.TrainingCap;
+				if (mastery < cap)
+				{
+					mastery += def.DummyHitMasteryGain;
+					if (mastery > cap) mastery = cap;
+					SetMasteryFor(ActiveForm, mastery);
+				}
+				return;
+			}
+
+			float maxAllowed = (_combatTicks > 0) ? 1f : def.TrainingCap;
+
+			if (mastery < maxAllowed)
+			{
+				mastery += def.RealHitMasteryGain;
+				if (mastery > maxAllowed) mastery = maxAllowed;
+				SetMasteryFor(ActiveForm, mastery);
+			}
+		}
+
+		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
+		{
+			OnHitNPC(target, hit, damageDone);
+		}
+
+		public override void PostUpdateRunSpeeds()
+		{
+			// Make sure our race/trait/form scalars are up to date when this hook runs
+			RecomputeStats();
+
+			// Always-on race/trait move speed
+			if (BaseMoveSpeedBonus != 0f)
+			{
+				Player.moveSpeed += BaseMoveSpeedBonus;
+				Player.maxRunSpeed *= 1f + BaseMoveSpeedBonus * 0.75f;
+	}
+
+	if (ActiveForm == DBAForm.None)
+		return;
+
+	float m = GetMasteryFor(ActiveForm);
+	float bonus = DBAForms.GetMoveSpeedBonus(ActiveForm, m);
+
+	Player.moveSpeed += bonus;
+	Player.maxRunSpeed *= 1f + bonus * 0.75f;
+}
+
+
+
 		private void ApplyControlledFlight()
 		{
-			// Fully negate gravity / falling
 			Player.gravity = 0f;
 			Player.maxFallSpeed = 0f;
 			Player.noFallDmg = true;
 			Player.fallStart = (int)(Player.position.Y / 16f);
 
-			// Stop vanilla wings/rocket logic from interfering
 			Player.wingTime = Player.wingTimeMax;
 			Player.rocketTime = Player.rocketTimeMax;
 
-			// Tuning knobs
-			float speed = 8f;     // flight top speed (per axis)
-			float accel = 0.35f;  // how quickly you reach target velocity
+			float speed = 8f;
+			float accel = 0.35f;
 
-			// Axis input (separate, so left/right never creates vertical drift)
 			bool left = Player.controlLeft;
 			bool right = Player.controlRight;
 			bool up = Player.controlUp;
 			bool down = Player.controlDown;
 
-			// Horizontal
 			if (left || right)
 			{
 				float targetX = (right ? 1f : 0f) + (left ? -1f : 0f);
@@ -245,11 +556,9 @@ namespace DragonBallAscension.Players
 			}
 			else
 			{
-				// No A/D: stop dead horizontally
 				Player.velocity.X = 0f;
 			}
 
-			// Vertical
 			if (up || down)
 			{
 				float targetY = (down ? 1f : 0f) + (up ? -1f : 0f);
@@ -258,7 +567,6 @@ namespace DragonBallAscension.Players
 			}
 			else
 			{
-				// No W/S: hard hover vertically (prevents the "sinking while strafing" issue)
 				Player.velocity.Y = 0f;
 			}
 		}
@@ -275,7 +583,6 @@ namespace DragonBallAscension.Players
 				return;
 			}
 
-			// Require at least some Ki to engage flight
 			if (!InfiniteKi && Ki <= 0)
 				return;
 
@@ -295,11 +602,9 @@ namespace DragonBallAscension.Players
 
 			Vector2 target = Main.MouseWorld;
 
-			// Clamp to world bounds (pixels)
 			target.X = MathHelper.Clamp(target.X, 16f, Main.maxTilesX * 16f - 16f);
 			target.Y = MathHelper.Clamp(target.Y, 16f, Main.maxTilesY * 16f - 16f);
 
-			// Find a safe spot: try moving upward in 16px steps if cursor is inside solid tiles.
 			Vector2 tryPos = target;
 			bool found = false;
 			for (int i = 0; i < 30; i++)
@@ -316,14 +621,12 @@ namespace DragonBallAscension.Players
 			if (!found)
 				return false;
 
-			// Spend Ki
 			if (!InfiniteKi)
 			{
 				Ki -= InstantTransmissionKiCost;
 				if (Ki < 0) Ki = 0;
 			}
 
-			// FX: departure
 			SoundEngine.PlaySound(SoundID.Item8, Player.Center);
 			for (int i = 0; i < 18; i++)
 			{
@@ -335,11 +638,9 @@ namespace DragonBallAscension.Players
 			Player.Teleport(tryPos, TeleportationStyleID.RodOfDiscord);
 			Player.velocity = Vector2.Zero;
 
-			// Multiplayer sync
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 				NetMessage.SendData(MessageID.TeleportEntity, -1, -1, null, 0, Player.whoAmI, tryPos.X, tryPos.Y, TeleportationStyleID.RodOfDiscord);
 
-			// FX: arrival
 			SoundEngine.PlaySound(SoundID.Item8, Player.Center);
 			for (int i = 0; i < 18; i++)
 			{
@@ -359,7 +660,6 @@ namespace DragonBallAscension.Players
 			if (ActiveForm == SelectedForm)
 				return false;
 
-			// Require at least some Ki to transform
 			if (!InfiniteKi && Ki <= 0)
 				return false;
 
@@ -459,8 +759,12 @@ namespace DragonBallAscension.Players
 			if (ActiveForm == DBAForm.None)
 				return "Form: None";
 
-			var def = DBAForms.GetDef(ActiveForm);
-			return $"FormBoost ATKx{def.AtkMult:0.00} DEFx{def.DefMult:0.00} Drain {def.KiDrainPerSecond:0.0}/s Mastery {(def.Mastery * 100f):0.0}%";
+			float m = GetMasteryFor(ActiveForm);
+			float atk = DBAForms.GetAtkMult(ActiveForm, m);
+			float def = DBAForms.GetDefMult(ActiveForm, m);
+			float drain = DBAForms.GetKiDrainPerSecond(ActiveForm, m);
+
+			return $"FormBoost ATKx{atk:0.00} DEFx{def:0.00} Drain {drain:0.0}/s Mastery {(m * 100f):0.0}%";
 		}
 
 		public string GetTraitEffectsText() => Traits.GetTraitEffectsText(Trait);

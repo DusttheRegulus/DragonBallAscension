@@ -3,6 +3,16 @@ Items: {
 		Tooltip: ""
 		DisplayName: Debug Ki Remote
 	}
+
+	FocusedKiBeam_Test: {
+		DisplayName: Focused Ki Beam_ Test
+		Tooltip: ""
+	}
+
+	KiBlaster_Test: {
+		DisplayName: Ki Blaster_ Test
+		Tooltip: ""
+	}
 }
 
 Keybinds: {
@@ -30,4 +40,71 @@ Buffs: {
 		DisplayName: Super Saiyan Buff
 		Description: Mods.DragonBallAscension.Buffs.SuperSaiyanBuff.Description
 	}
+
+	AndroidRaceBuff: {
+		DisplayName: Android Race Buff
+		Description: Mods.DragonBallAscension.Buffs.AndroidRaceBuff.Description
+	}
+
+	BattleGeniusTraitBuff: {
+		DisplayName: Battle Genius Trait Buff
+		Description: Mods.DragonBallAscension.Buffs.BattleGeniusTraitBuff.Description
+	}
+
+	CorruptedTraitBuff: {
+		DisplayName: Corrupted Trait Buff
+		Description: Mods.DragonBallAscension.Buffs.CorruptedTraitBuff.Description
+	}
+
+	DraconicTraitBuff: {
+		DisplayName: Draconic Trait Buff
+		Description: Mods.DragonBallAscension.Buffs.DraconicTraitBuff.Description
+	}
+
+	FriezaClanRaceBuff: {
+		DisplayName: Frieza Clan Race Buff
+		Description: Mods.DragonBallAscension.Buffs.FriezaClanRaceBuff.Description
+	}
+
+	HumanRaceBuff: {
+		DisplayName: Human Race Buff
+		Description: Mods.DragonBallAscension.Buffs.HumanRaceBuff.Description
+	}
+
+	IronWillTraitBuff: {
+		DisplayName: Iron Will Trait Buff
+		Description: Mods.DragonBallAscension.Buffs.IronWillTraitBuff.Description
+	}
+
+	LegendaryTraitBuff: {
+		DisplayName: Legendary Trait Buff
+		Description: Mods.DragonBallAscension.Buffs.LegendaryTraitBuff.Description
+	}
+
+	MajinRaceBuff: {
+		DisplayName: Majin Race Buff
+		Description: Mods.DragonBallAscension.Buffs.MajinRaceBuff.Description
+	}
+
+	NamekianRaceBuff: {
+		DisplayName: Namekian Race Buff
+		Description: Mods.DragonBallAscension.Buffs.NamekianRaceBuff.Description
+	}
+
+	ProdigyTraitBuff: {
+		DisplayName: Prodigy Trait Buff
+		Description: Mods.DragonBallAscension.Buffs.ProdigyTraitBuff.Description
+	}
+
+	SaiyanRaceBuff: {
+		DisplayName: Saiyan Race Buff
+		Description: Mods.DragonBallAscension.Buffs.SaiyanRaceBuff.Description
+	}
+
+	WarriorsSpiritTraitBuff: {
+		DisplayName: Warriors Spirit Trait Buff
+		Description: Mods.DragonBallAscension.Buffs.WarriorsSpiritTraitBuff.Description
+	}
 }
+
+Projectiles.KiBlastProjectile_Test.DisplayName: Ki Blast Projectile_ Test
