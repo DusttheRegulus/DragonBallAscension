@@ -28,7 +28,7 @@ A Dragon Ball inspired Terraria mod focused on:
 
 ## Current Status (Functional Baseline)
 
-This repository is currently in an early v0.5 baseline state. Core systems function, but content and balance are placeholders.
+This repository is currently in an early v0.6 baseline state. Core systems function, but content and balance are placeholders.
 
 ----------------------------------------------------------------
 
